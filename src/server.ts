@@ -3,6 +3,7 @@ import * as Boom from 'boom'
 import * as Joi from 'joi'
 import * as Ninjas from './api/ninjas'
 import { IServerConfigurations } from './configurations'
+import { installPlugins } from './plugins'
 
 export async function init(
   configs: IServerConfigurations,
@@ -26,6 +27,9 @@ export async function init(
         },
       },
     })
+
+    console.log('Installing plugins')
+    await installPlugins(server)
 
     console.log('Register Routes')
     Ninjas.init(server, configs, database)
