@@ -1,0 +1,23 @@
+{
+  "extends": ["airbnb", "@natahouse", "plugin:prettier/recommended"],
+  "settings": {
+    "import/resolver": {
+      "node": {
+        "paths": ["src"],
+        "extensions": [".js", ".jsx", ".storybook"]
+      }
+    }
+  },
+  "globals": {
+    "document": true,
+    "Image": true,
+    "window": true
+  },
+  "rules": {
+    "import/prefer-default-export": "off",
+    "arrow-body-style": "off",
+    "max-params": "off",
+    "import/no-extraneous-dependencies": "off",
+    "camelcase": "off"
+  }
+}

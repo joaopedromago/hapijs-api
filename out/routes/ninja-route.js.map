@@ -1,0 +1,1 @@
+{"version":3,"file":"ninja-route.js","sourceRoot":"","sources":["../../src/routes/ninja-route.ts"],"names":[],"mappings":";;AAAa,QAAA,UAAU,GAAG;IACxB,MAAM,EAAE,KAAK;IACb,IAAI,EAAE,GAAG;IACT,OAAO,EAAE,UAAC,OAAO,EAAE,CAAC;QAClB,OAAO,WAAW,CAAA;IACpB,CAAC;IACD,OAAO,EAAE;QACP,OAAO,EAAE;YACP,cAAc,EAAE,IAAI;SACrB;KACF;CACF,CAAA"}
