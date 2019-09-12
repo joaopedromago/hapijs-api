@@ -2,42 +2,24 @@ require('dotenv').config()
 import 'reflect-metadata'
 import * as Server from './server'
 import * as Entities from './entities'
-import { createConnection } from 'typeorm'
+import { Connection, createConnection } from 'typeorm'
 import * as nconf from 'nconf'
 import * as path from 'path'
+import { BaseServer } from './common/interface'
 
-// Define async start function
-const start = async ({ config, db }) => {
-  try {
-    const server = await Server.init(config, db)
-    await server.start()
-    console.log('Server running at:', server.info.uri)
-  } catch (err) {
-    console.error('Error starting server: ', err.message)
-    throw err
-  }
-}
-
-const initDb = async () => {
+const initDb = async (server: BaseServer): Promise<Connection> => {
   let database
   try {
     database = await createConnection({
-      cli: {
-        entitiesDir: 'src/entities',
-        migrationsDir: 'migrations',
-      },
-      database: 'konoha',
-      schema: 'konoha',
-      entities: ['./src/entities/*.ts'],
-      host: 'localhost',
+      database: server.app.TYPEORM_DATABASE,
+      entities: [server.app.TYPEORM_ENTITIES],
+      host: server.app.TYPEORM_HOST,
       logging: false,
-      synchronize: false,
-      password: 'natahouse',
-      port: 5432,
-      type: 'postgres',
-      username: 'Mago',
-      migrationsTableName: 'migration_history',
-      migrations: ['migrations/*.ts'],
+      password: server.app.TYPEORM_PASSWORD,
+      port: server.app.TYPEORM_PORT,
+      synchronize: server.app.TYPEORM_AUTO_SCHEMA_SYNC,
+      type: server.app.TYPEORM_CONNECTION,
+      username: server.app.TYPEORM_USERNAME,
     })
     console.log('DB connected')
   } catch (error) {
@@ -58,9 +40,21 @@ export function getServerConfigs() {
   return config
 }
 
-// Starting Application Server
-const serverConfigs = getServerConfigs()
+// Define async start function
+const start = async (): Promise<void> => {
+  const db = await initDb
+  const serverConfigs = getServerConfigs() // Starting Application Server
+  const server = await Server.init(serverConfigs, db)
 
-const database = initDb()
+  await server.start()
+  console.log('Server running at PORT:', server.settings.port)
+}
 
-start({ config: serverConfigs, db: database })
+start()
+  .then(() => {
+    console.log('Ready to receive requests.')
+  })
+  .catch((err: Error): void => {
+    console.info('Error starting server: ', err.message)
+    process.exit(1)
+  })
