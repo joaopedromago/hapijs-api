@@ -12,7 +12,19 @@ export class Ninja extends BaseEntity {
   @Column('varchar', {
     nullable: false,
     name: 'nome',
-    length: 50,
+    length: 60,
   })
   nome: string
+
+  @Column('varchar', {
+    nullable: false,
+    name: 'aldeia',
+    length: 80,
+  })
+  aldeia: string
+
+  public mount(payload) {
+    this.nome = payload.nome
+    this.aldeia = payload.aldeia
+  }
 }

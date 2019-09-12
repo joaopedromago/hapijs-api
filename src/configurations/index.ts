@@ -6,3 +6,5 @@ export interface IServerConfigurations {
   routePrefix: string
   premiumPlanId: string
 }
+
+// export { swaggerplugin } from './default-plugins'

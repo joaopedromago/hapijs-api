@@ -9,7 +9,7 @@ export async function init(
   database: Object
 ): Promise<Hapi.Server> {
   try {
-    const port = 5000
+    const port = 3000
     const server = new Hapi.Server({
       debug: { request: ['error'] },
       port: port,
