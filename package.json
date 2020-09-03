@@ -8,7 +8,7 @@
     "typescript": "3.3.3333"
   },
   "dependencies": {
-    "@hapi/hapi": "18.3.2",
+    "@hapi/hapi": "19.1.1",
     "@hapi/inert": "5.2.1",
     "@hapi/vision": "5.5.3",
     "boom": "7.3.0",
